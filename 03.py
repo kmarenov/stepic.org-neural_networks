@@ -17,5 +17,15 @@ from urllib.request import urlopen
 f = urlopen(input())
 data = np.loadtxt(f, delimiter=',', skiprows=1)
 
-print(data)
+Y = data[:,[0]]
+X = data[:,1:]
 
+ones = np.ones_like(Y)
+
+X = np.hstack((ones, X))
+
+b = np.dot(np.dot(np.linalg.pinv(np.dot(X.T, X)), X.T), Y)
+
+str_b = " ".join(map(str, b.flatten()))
+
+print(str_b)
